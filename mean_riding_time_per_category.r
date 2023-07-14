@@ -7,12 +7,12 @@ setwd("~/Git/data_analysis_case_study_cyclistic/csv/")
 # Carregamento dos csvs
 bikes_csv_files <-
   list.files(path = ".", pattern = "*.csv", recursive = FALSE) %>% 
-  map_df(~read_csv(.))
+  map_df(~read_csv(.)) %>% 
+  drop_na()
 
 # Calcular tempo médio de uso dos membros vs. usuários casuais
 bikes_mean_riding_time_data <- bikes_csv_files %>% 
-  drop_na() %>% 
-  mutate(bikes_csv_files, riding_time=difftime(ended_at, started_at, units = "mins")) %>% 
+  mutate(riding_time=difftime(ended_at, started_at, units = "mins")) %>% 
   group_by(member_casual) %>% 
   summarise(mean_riding_time = round(mean(riding_time), digits = 1))
 
@@ -26,7 +26,7 @@ ggplot(data = bikes_mean_riding_time_data,
          theme(plot.title = element_text(hjust = 0.3)) +
   geom_col() +
   labs(
-    x = "Tempo médio de uso",
+    x = "Tempo médio de uso (em minutos)",
     y = "Categoria de usuário"
   ) +
   guides(fill = "none")
