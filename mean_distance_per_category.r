@@ -22,9 +22,10 @@ oldest_registry <- format(as.Date(min(bikes_csv_files$started_at), format="%Y/%m
 
 # Calcular distância média, em Km, percorrida por membros vs. usuários casuais
 bikes_mean_distance_data <- bikes_csv_files %>%
-  mutate(distance = round(distHaversine(cbind(start_lng, start_lat), cbind(end_lng, end_lat)) / 1000, digits = 1)) %>% 
+  mutate(distance = round(distHaversine(cbind(start_lng, start_lat), cbind(end_lng, end_lat)))) %>% 
   group_by(member_casual) %>%
-  summarise(mean_distance = round(mean(distance), digits = 1))
+  summarise(mean_distance = round(mean(distance)))
+View(bikes_mean_distance_data)
 
 # Geração do gráfico da distância média percorrida por categoria
 ggplot(data = bikes_mean_distance_data,
@@ -37,11 +38,12 @@ ggplot(data = bikes_mean_distance_data,
   labs(
     title = "Distância média percorrida por categoria de usuário",
     subtitle = paste("Baseado em", total_registries, "registros coletados entre", oldest_registry, "e", newest_registry),
-    x = "Distância média percorrida (em Km)",
+    x = "Distância média percorrida (em metros)",
     y = "Categoria de usuário"
   ) +
   theme(
     plot.title = element_text(hjust = 0.5),
     plot.subtitle = element_text(hjust = 0.5)
   ) +
+  geom_text(aes(label = mean_distance, vjust = 0.5, hjust = 1.9)) +
   guides(fill = "none")
