@@ -1,3 +1,6 @@
+# install.packages("tidyverse")
+# install.packages("ggplot2")
+
 library(tidyverse)
 library(ggplot2)
 
@@ -9,6 +12,18 @@ bikes_csv_files <-
   list.files(path = ".", pattern = "*.csv", recursive = FALSE) %>% 
   map_df(~read_csv(.)) %>% 
   drop_na()
+
+#Contagem do total de membros anuais
+total_members <- bikes_csv_files %>% 
+  filter(member_casual == "member") %>% 
+  distinct(ride_id) %>% 
+  count()
+
+#Contagem do total de usuários casuais
+total_casuals <- bikes_csv_files %>% 
+  filter(member_casual == "casual") %>% 
+  distinct(ride_id) %>% 
+  count()
 
 # Informações sobre os registros (utilizadas no subtítulo do gráfico)
 total_registries <- count(bikes_csv_files)
@@ -31,7 +46,9 @@ ggplot(data = bikes_mean_riding_time_data,
   geom_col() +
   labs(
     title = "Tempo médio de uso por categoria de usuário",
-    subtitle = paste("Baseado em", total_registries, "registros coletados entre", oldest_registry, "e", newest_registry),
+    subtitle = paste("Baseado em", total_registries, "registros coletados entre", oldest_registry, "e", newest_registry, 
+                     "\n", "Total de membros anuais: ", total_members, 
+                     "\n", "Total de usuários casuais: ", total_casuals),
     x = "Tempo médio de uso (em minutos)",
     y = "Categoria de usuário"
   ) +

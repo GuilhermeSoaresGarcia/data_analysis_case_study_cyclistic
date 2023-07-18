@@ -15,6 +15,18 @@ bikes_csv_files <-
   map_df(~read_csv(.)) %>% 
   drop_na()
 
+#Contagem do total de membros anuais
+total_members <- bikes_csv_files %>% 
+  filter(member_casual == "member") %>% 
+  distinct(ride_id) %>% 
+  count()
+
+#Contagem do total de usuários casuais
+total_casuals <- bikes_csv_files %>% 
+  filter(member_casual == "casual") %>% 
+  distinct(ride_id) %>% 
+  count()
+
 # Informações sobre os registros (utilizadas no subtítulo do gráfico)
 total_registries <- count(bikes_csv_files)
 newest_registry <- format(as.Date(max(bikes_csv_files$started_at), format="%Y/%m/%d"), "%d/%m/%Y")
@@ -25,7 +37,6 @@ bikes_mean_distance_data <- bikes_csv_files %>%
   mutate(distance = round(distHaversine(cbind(start_lng, start_lat), cbind(end_lng, end_lat)))) %>% 
   group_by(member_casual) %>%
   summarise(mean_distance = round(mean(distance)))
-View(bikes_mean_distance_data)
 
 # Geração do gráfico da distância média percorrida por categoria
 ggplot(data = bikes_mean_distance_data,
@@ -37,7 +48,9 @@ ggplot(data = bikes_mean_distance_data,
   geom_col() +
   labs(
     title = "Distância média percorrida por categoria de usuário",
-    subtitle = paste("Baseado em", total_registries, "registros coletados entre", oldest_registry, "e", newest_registry),
+    subtitle = paste("Baseado em", total_registries, "registros coletados entre", oldest_registry, "e", newest_registry, 
+                     "\n", "Total de membros anuais: ", total_members, 
+                     "\n", "Total de usuários casuais: ", total_casuals),
     x = "Distância média percorrida (em metros)",
     y = "Categoria de usuário"
   ) +
