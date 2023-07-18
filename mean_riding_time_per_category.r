@@ -39,4 +39,5 @@ ggplot(data = bikes_mean_riding_time_data,
     plot.title = element_text(hjust = 0.5), 
     plot.subtitle = element_text(hjust = 0.5)
     ) +
+  geom_text(aes(label = mean_riding_time, vjust = 0.5, hjust = 1.9)) +
   guides(fill = "none")
