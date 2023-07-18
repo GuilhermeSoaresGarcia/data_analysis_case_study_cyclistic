@@ -28,3 +28,21 @@ ___
 **2. Considerar as principais partes interessadas:**
 
 *Compreender as necessidades e expectativas da equipe executiva da Cyclistic, bem como as preferências e comportamentos dos membros anuais e ciclistas casuais, para orientar a tomada de decisões e desenvolver uma estratégia de marketing eficaz.*
+
+<br><br>
+___
+<br>
+
+## Considerações finais:
+
+*Ao analisar os dados disponibilizados para este estudo de caso, foi possível perceber que membros anuais são a maioria dos registros, com cerca de 3 milhões de entradas, enquanto os usuários casuais correspondem a pouco menos de 2 milhões. Ainda, usuários casuais tendem a utilizar durante muito mais tempo as bicicletas do que os membros anuais - em média, quase o dobro do tempo:*
+
+| ![mean_riding_time](img/mean_riding_time.png) |
+
+<br><br>
+
+*Outrossim, a média da distância percorrida entre as duas categorias tem pouca diferença:*
+
+| ![mean_distance](img/mean_distance.png) |
+
+*Portanto, o fator realmente relevante talvez seja o tempo médio que o usuário utiliza o serviço - e a abordagem para a assinatura de um plano anual pode ser nesse sentido: o custo médio por tempo de utilização.*
