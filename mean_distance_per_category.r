@@ -25,7 +25,6 @@ bikes_mean_distance_data <- bikes_csv_files %>%
   mutate(distance = round(distHaversine(cbind(start_lng, start_lat), cbind(end_lng, end_lat)) / 1000, digits = 1)) %>% 
   group_by(member_casual) %>%
   summarise(mean_distance = round(mean(distance), digits = 1))
-View(bikes_mean_distance_data)
 
 # Geração do gráfico da distância média percorrida por categoria
 ggplot(data = bikes_mean_distance_data,
